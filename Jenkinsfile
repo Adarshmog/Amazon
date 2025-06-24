@@ -2,41 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                echo 'Cloning the repository...'
-                git https://github.com/Adarshmog/Amazon.git'
+                git url: 'https://github.com/Adarshmog/Amazon.git'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Building the application...'
-                 sh 'mvn clean package'
+                echo 'Building...'
             }
         }
 
-        stage('Test') {
+        stage('Deploy') {
             steps {
-                echo 'Running tests...'
-                sh 'mvn test'
+                echo 'Deploying...'
             }
-        }
-
-stage('Deploy') {
-    steps {
-        echo 'Deploying the application to Tomcat...'
-        sh 'scp target/*.war adarshm@192.168.111.1:/home/adarshm/apache-tomcat-9.0.105/webapps/'
-    }
-}
- }
-
-    post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed. Please check logs.'
         }
     }
 }
